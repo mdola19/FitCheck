@@ -26,7 +26,6 @@
     </div>
 
     <div class="navbar">
-        <div class="overlay Active"></div>
         <div class="container active">
             <div class="menu-btn">
                  <i class="ph-bold ph-caret-left"></i>
@@ -37,119 +36,64 @@
                 </div>
 
                 <div class="details">
-                    <p class="title">Mechatronics Engineer</p>
-                    <p class="name">Manjot Dola</p>
+                    <p class="name">Jake</p>
                 </div>
             </div>
             <div class="nav">
                 <div class="menu">
-                    <p class="title">Career</p>
+                    <p class="title">FitCheck</p>
                     <ul>
                         <li class="active">
-                            <a href="#">
+                            <a href="index.html">
                                 <i class="icon ph-bold ph-house-simple"></i>
                                 <span class="text black">Home</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="icon ph-bold ph-wrench"></i>
-                                <span class="text black">Skills</span>
+                            <a href="wardrobe.html">
+                                <i class="icon ph-bold ph-dresser"></i>
+                                <span class="text black">Wardrobe</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="icon ph-bold ph-briefcase"></i>
-                                <span class="text black">Experience</span>
+                            <a href="outfits.html">
+                                <i class="icon ph-bold ph-t-shirt"></i>
+                                <span class="text black">Outfits</span>
                             </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="#">
-                                        <span class="text">Our Wave Hub</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="text">iUVO Connect</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="icon ph-bold ph-graduation-cap"></i>
-                                <span class="text black">Extracurriculars</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="#">
-                                        <span class="text">Brampton Robotics</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="text">CPSS Programming</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon ph-bold ph-stack-overflow-logo"></i>
-                                <span class="text black">Projects</span>
+                            <a href="expand.html">
+                                <i class="icon ph-bold ph-plus-circle"></i>
+                                <span class="text black">Expand Wardrobe</span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="menu account">
-                <p class="title">Socials</p>
+                <p class="title">User</p>
                 <ul>
                     <li>
-                        <a href="#">
-                            <i class="icon ph-bold ph-github-logo"></i>
-                            <span class="text black">GitHub</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon ph-bold ph-linkedin-logo"></i>
-                            <span class="text black">LinkedIn</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon ph-bold ph-read-cv-logo"></i>
-                            <span class="text black">Resume</span>
+                        <a id="logout-btn" href="#">
+                            <i class="icon ph-bold ph-sign-out"></i>
+                            <span class="text black">Logout</span>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+    <div class="overlay Active"></div>
 
     <!-- JAVASCRIPT -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <script> // Navbar + Typer Effect
-        $(".menu > ul > li").click(function (e){
-            // Removes from other tabs
-            $(this).siblings().removeClass("active");
-            // Adds class to clicked tab
-            $(this).toggleClass("active");
-            // Show subpages if applicable
-            $(this).find("ul").slideToggle();
-            // Close other subpages if open
-            $(this).siblings().find("ul").slideUp();
-        });
+    <script src="navbar.js"></script>
 
-        $(".menu-btn").click(function() {
-            $(".container").toggleClass("active")
-            $(".overlay").toggleClass("Active")
-        })
+    <script> // Navbar + Typer Effect
 
         // Typing Effect
-        const text = ['Changing lives in the closet.'];
+        const text = ['Changing lives at the closet.'];
         let count = 0;
         let index = 0;
         let currentText = '';
@@ -179,6 +123,15 @@
         // Start the typing animation with a 100ms interval
         typingInterval = setInterval(type, 100);
         // End of Typing Effect
+    </script>
+
+    <script> // Logout Button
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = 'login.html';
+        });
     </script>
 
     

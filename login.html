@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="style.css" rel="stylesheet">
+  <title>Login</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <form id="login-form" class="mx-auto">
+      <h4 class="text-center">Login</h4>
+      <div class="mb-3">
+        <label for="username" class="form-label">User Name</label>
+        <input type="text" class="form-control" id="username">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password">
+      </div>
+      <div id="error-message" class="text-danger mb-3"></div> <!-- Error message container -->
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
+  <!-- Custom JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check if user is already logged in
+      if (localStorage.getItem('isLoggedIn') === 'true') {
+        window.location.href = 'index.html';
+      }
+
+      // Handle login form submission
+      document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('error-message');
+
+        // Clear any existing error messages
+        errorMessage.textContent = '';
+
+        // Basic authentication check
+        if (username === 'jake123' && password === '123') {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('username', username);  // Store username if needed
+          window.location.href = 'index.html';  // Redirect to index.html
+        } else {
+          errorMessage.textContent = 'Invalid credentials. Please try again.';  // Display error message
+        }
+      });
+    });
+  </script>
+</body>
+</html>

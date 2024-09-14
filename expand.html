@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expand</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="index-body">
+
+    <div class="navbar">
+        <div class="container active">
+            <div class="menu-btn">
+                 <i class="ph-bold ph-caret-left"></i>
+            </div>
+            <div class="head">
+                <div class="pfp-img">
+                    <img src="images/pfp.jpg" alt="">
+                </div>
+
+                <div class="details">
+                    <p class="name">Jake</p>
+                </div>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <p class="title">FitCheck</p>
+                    <ul>
+                        <li class="active">
+                            <a href="index.html">
+                                <i class="icon ph-bold ph-house-simple"></i>
+                                <span class="text black">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="wardrobe.html">
+                                <i class="icon ph-bold ph-dresser"></i>
+                                <span class="text black">Wardrobe</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="outfits.html">
+                                <i class="icon ph-bold ph-t-shirt"></i>
+                                <span class="text black">Outfits</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="expand.html">
+                                <i class="icon ph-bold ph-plus-circle"></i>
+                                <span class="text black">Expand Wardrobe</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="menu account">
+                <p class="title">User</p>
+                <ul>
+                    <li>
+                        <a id="logout-btn" href="#">
+                            <i class="icon ph-bold ph-sign-out"></i>
+                            <span class="text black">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="overlay Active"></div>
+
+    <div class="expand-container">
+        <h1>Expand Your Wardrobe</h1>
+
+        <div class="btn-container">
+            <a onclick="" href="" class="tops btn">Tops</a>
+            <a onclick="" href="" class="bottoms btn">Bottoms</a>
+            <a onclick="" href="" class="sneakers btn">Sneakers</a>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script src="navbar.js"></script>
+
+    <script> // Logout Button
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = 'login.html';
+        });
+    </script>
+
+    
+</body>
+</html>
