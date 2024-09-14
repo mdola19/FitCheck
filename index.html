@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitCheck</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="index-body">
+
+    <div class="hero">
+        <div class="details-container">
+            <h1>Fit<a href="">Check</a></h1>
+            <div class="typing-container">
+                <span class="typing"></span>
+                <span class="cursor">|</span>
+            </div>
+            <a class="demo">View Demo</a>
+        </div>
+
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <div class="navbar">
+        <div class="overlay Active"></div>
+        <div class="container active">
+            <div class="menu-btn">
+                 <i class="ph-bold ph-caret-left"></i>
+            </div>
+            <div class="head">
+                <div class="pfp-img">
+                    <img src="images/pfp.jpg" alt="">
+                </div>
+
+                <div class="details">
+                    <p class="title">Mechatronics Engineer</p>
+                    <p class="name">Manjot Dola</p>
+                </div>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <p class="title">Career</p>
+                    <ul>
+                        <li class="active">
+                            <a href="#">
+                                <i class="icon ph-bold ph-house-simple"></i>
+                                <span class="text black">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="icon ph-bold ph-wrench"></i>
+                                <span class="text black">Skills</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="icon ph-bold ph-briefcase"></i>
+                                <span class="text black">Experience</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="text">Our Wave Hub</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="text">iUVO Connect</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="icon ph-bold ph-graduation-cap"></i>
+                                <span class="text black">Extracurriculars</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="text">Brampton Robotics</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="text">CPSS Programming</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="icon ph-bold ph-stack-overflow-logo"></i>
+                                <span class="text black">Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="menu account">
+                <p class="title">Socials</p>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="icon ph-bold ph-github-logo"></i>
+                            <span class="text black">GitHub</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon ph-bold ph-linkedin-logo"></i>
+                            <span class="text black">LinkedIn</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon ph-bold ph-read-cv-logo"></i>
+                            <span class="text black">Resume</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script> // Navbar + Typer Effect
+        $(".menu > ul > li").click(function (e){
+            // Removes from other tabs
+            $(this).siblings().removeClass("active");
+            // Adds class to clicked tab
+            $(this).toggleClass("active");
+            // Show subpages if applicable
+            $(this).find("ul").slideToggle();
+            // Close other subpages if open
+            $(this).siblings().find("ul").slideUp();
+        });
+
+        $(".menu-btn").click(function() {
+            $(".container").toggleClass("active")
+            $(".overlay").toggleClass("Active")
+        })
+
+        // Typing Effect
+        const text = ['Changing lives in the closet.'];
+        let count = 0;
+        let index = 0;
+        let currentText = '';
+        let letter = '';
+        let typingInterval;
+
+        function type() {
+            if (count === text.length) {
+                count = 0;
+            }
+
+            currentText = text[count];
+            letter = currentText.slice(0, ++index);
+
+            document.querySelector('.typing').innerHTML = letter;
+
+            if (letter.length === currentText.length) { 
+                clearInterval(typingInterval); // Stop typing when the text is fully displayed
+                setTimeout(() => {
+                    index = 0; // Reset index to restart typing
+                    document.querySelector('.typing').innerHTML = '|'; // Clear the displayed text
+                    typingInterval = setInterval(type, 100); // Restart typing
+                }, 6000); // Wait 6 seconds before restarting the animation
+            }
+        }
+
+        // Start the typing animation with a 100ms interval
+        typingInterval = setInterval(type, 100);
+        // End of Typing Effect
+    </script>
+
+    
+</body>
+</html>
