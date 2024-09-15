@@ -219,12 +219,12 @@ def save_snapshot():
     image_data = base64.b64decode(image_data)
     insert = True
     combinations = sendGroqRequest()
-    print(combinations)
-    brz = 1 + " "
 
     # Generate a unique filename using the current time
-    snapshot_filename = clothItem.format(int(time.time()))
+    snapshot_filename = "blue shirt.png"
     filepath = os.path.join('static', 'snapshots', snapshot_filename)
+    filepath2 = os.path.join('static', 'images', snapshot_filename)
+    
 
     # Save image to database
     new_snapshot = Snapshot(filename=snapshot_filename, image_data=image_data)
@@ -232,6 +232,8 @@ def save_snapshot():
     db.session.commit()
 
     with open(filepath, 'wb') as f:
+        f.write(image_data)
+    with open(filepath2, 'wb') as f:
         f.write(image_data)
 
     return jsonify({'filename': snapshot_filename})
@@ -294,8 +296,8 @@ def logout():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
-        # db.drop_all()
+        # db.create_all()
+        db.drop_all()
     app.run(debug=True)
 
 

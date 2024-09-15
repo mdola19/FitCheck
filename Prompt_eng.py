@@ -4,6 +4,7 @@ import json, requests, os
 
 #[['Blue sweater', 'Blue jeans'], ['Red hoodie', 'Black chinos'], ['White t-shirt', 'Grey sweatpants'], ['Blue t-shirt', 'Brown corduroys']]
 
+
 # List of tops with RGB values
 tops = [
     "(0, 0, 255) sweater",      # blue
