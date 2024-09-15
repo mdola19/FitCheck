@@ -48,7 +48,7 @@ def fetch_tops():
     len_titles = len(product_titles)
     len_prices = len(product_prices)
     len_images = len(product_images)
-    print(f"Titles: {len_titles}, Prices: {len_prices}, Images: {len_images}")
+    #print(f"Titles: {len_titles}, Prices: {len_prices}, Images: {len_images}")
 
     # Combine the lists into a single list of dictionaries
     for i in range(min(len_titles, len_prices, len_images)):
@@ -77,4 +77,4 @@ def fetch():
 
 # Run this function to see if it fetches the expected data
 fetch()
-print(fetch_tops())
+#print(fetch_tops())
