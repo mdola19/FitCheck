@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitCheck</title>
+    <link rel="stylesheet" href="static/css/main.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="index-body">
+
+    <div class="hero">
+        <div class="details-container">
+            <h1>Fit<a href="">Check</a></h1>
+            <div class="typing-container">
+                <span class="typing"></span>
+                <span class="cursor">|</span>
+            </div>
+            <a class="demo">View Demo</a>
+        </div>
+
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <div class="navbar">
+        <div class="container active">
+            <div class="menu-btn">
+                 <i class="ph-bold ph-caret-left"></i>
+            </div>
+            <div class="head">
+                <div class="pfp-img">
+                    <img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="">
+                </div>
+
+                <div class="details">
+                    <p class="name">Jake</p>
+                </div>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <p class="title">FitCheck</p>
+                    <ul>
+                        <li class="">
+                            <a href="{{ url_for('index') }}">
+                                <i class="icon ph-bold ph-house-simple"></i>
+                                <span class="text black">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('wardrobe') }}">
+                                <i class="icon ph-bold ph-dresser"></i>
+                                <span class="text black">Wardrobe</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('outfits') }}">
+                                <i class="icon ph-bold ph-t-shirt"></i>
+                                <span class="text black">Outfits</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('expand') }}">
+                                <i class="icon ph-bold ph-plus-circle"></i>
+                                <span class="text black">Expand Wardrobe</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="menu account">
+                <p class="title">User</p>
+                <ul>
+                    <li>
+                        <a id="logout-btn" href="#">
+                            <i class="icon ph-bold ph-sign-out"></i>
+                            <span class="text black">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="overlay Active"></div>
+
+    <!-- JAVASCRIPT -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="{{ url_for('static', filename='navbar.js') }}"></script>
+
+    <script>
+        // Typing Effect
+        const text = ['Changing lives at the closet.'];
+        let count = 0;
+        let index = 0;
+        let currentText = '';
+        let letter = '';
+        let typingInterval;
+
+        function type() {
+            if (count === text.length) {
+                count = 0;
+            }
+
+            currentText = text[count];
+            letter = currentText.slice(0, ++index);
+
+            document.querySelector('.typing').innerHTML = letter;
+
+            if (letter.length === currentText.length) { 
+                clearInterval(typingInterval); // Stop typing when the text is fully displayed
+                setTimeout(() => {
+                    index = 0; // Reset index to restart typing
+                    document.querySelector('.typing').innerHTML = '|'; // Clear the displayed text
+                    typingInterval = setInterval(type, 100); // Restart typing
+                }, 6000); // Wait 6 seconds before restarting the animation
+            }
+        }
+
+        // Start the typing animation with a 100ms interval
+        typingInterval = setInterval(type, 100);
+
+        // Logout Button
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = '{{ url_for("login") }}';
+        });
+    </script>
+</body>
+</html>

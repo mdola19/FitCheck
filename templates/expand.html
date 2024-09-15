@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expand</title>
+    <link rel="stylesheet" href="static/css/main.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="index-body">
+
+    <div class="navbar">
+        <div class="container active">
+            <div class="menu-btn">
+                 <i class="ph-bold ph-caret-left"></i>
+            </div>
+            <div class="head">
+                <div class="pfp-img">
+                    <img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="">
+                </div>
+
+                <div class="details">
+                    <p class="name">Jake</p>
+                </div>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <p class="title">FitCheck</p>
+                    <ul>
+                        <li class="">
+                            <a href="{{ url_for('index') }}">
+                                <i class="icon ph-bold ph-house-simple"></i>
+                                <span class="text black">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('wardrobe') }}">
+                                <i class="icon ph-bold ph-dresser"></i>
+                                <span class="text black">Wardrobe</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('outfits') }}">
+                                <i class="icon ph-bold ph-t-shirt"></i>
+                                <span class="text black">Outfits</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('expand') }}">
+                                <i class="icon ph-bold ph-plus-circle"></i>
+                                <span class="text black">Expand Wardrobe</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="menu account">
+                <p class="title">User</p>
+                <ul>
+                    <li>
+                        <a id="logout-btn" href="#">
+                            <i class="icon ph-bold ph-sign-out"></i>
+                            <span class="text black">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="overlay Active"></div>
+
+    <div class="expand-container">
+        <h1>Expand Your Wardrobe</h1>
+
+        <div class="btn-container">
+            <a data-target="list1" href="" class="tops btn">Tops</a>
+            <a data-target="list2" href="" class="bottoms btn">Bottoms</a>
+        </div>
+
+        <ul id="list1" class="product">
+            {% for top in tops %}
+                <li>
+                    <a target="_blank" href="{{ top.link }}"><img src="{{ top.image }}" alt="{{ top.title }}"></a>
+                    <div>
+                        <h2>{{ top.title }}</h2>
+                        <p>{{ top.price }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <ul id="list2" class="product">
+            {% for bottom in bottoms %}
+                <li>
+                    <img src="{{ bottom.image }}" alt="{{ bottom.title }}">
+                    <div>
+                        <h2>{{ bottom.title }}</h2>
+                        <p>{{ bottom.price }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="{{ url_for('static', filename='navbar.js') }}"></script>
+
+    <script> // Logout Button
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = '{{ url_for("login") }}';
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('a[data-target]').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+
+                // Get the target list ID from the link's data attribute
+                var targetId = this.getAttribute('data-target');
+                var targetList = document.getElementById(targetId);
+                
+                // Toggle the display of the target list
+                if (targetList.style.display === 'none' || targetList.style.display === '') {
+                    targetList.style.display = 'flex';
+                } else {
+                    targetList.style.display = 'none';
+                }
+                
+                // Hide other lists
+                document.querySelectorAll('.product').forEach(list => {
+                    if (list.id !== targetId) {
+                        list.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
