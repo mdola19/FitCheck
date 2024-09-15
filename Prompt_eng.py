@@ -3,31 +3,33 @@ from groq import Groq
 import json, requests, os
 
 #test data
+# List of tops with RGB values
 tops = [
-    "blue sweater",
-    "black hoodie",
-    "white t-shirt",
-    "red flannel shirt",
-    "gray jacket"
+    "(0, 0, 255) sweater",      # blue
+    "(0, 0, 0) hoodie",         # black
+    "(255, 255, 255) t-shirt",  # white
+    "(255, 0, 0) flannel shirt",# red
+    "(128, 128, 128) jacket"    # gray
 ]
 
-# List of bottoms
+# List of bottoms with RGB values
 bottoms = [
-    "blue jeans",
-    "black chinos",
-    "gray sweatpants",
-    "brown corduroys",
-    "khaki shorts"
+    "(0, 0, 255) jeans",        # blue
+    "(0, 0, 0) chinos",         # black
+    "(128, 128, 128) sweatpants",# gray
+    "(165, 42, 42) corduroys",  # brown
+    "(240, 230, 140) shorts"    # khaki
 ]
 
-# List of footwear
+# List of footwear with RGB values
 footwear = [
-    "white sneakers",
-    "black boots",
-    "brown loafers",
-    "gray running shoes",
-    "blue sandals"
+    "(255, 255, 255) sneakers", # white
+    "(0, 0, 0) boots",          # black
+    "(165, 42, 42) loafers",    # brown
+    "(128, 128, 128) running shoes", # gray
+    "(0, 0, 255) sandals"       # blue
 ]
+
 
 #wrapper function to update json files 
 def add_location_to_json(file_path, location, location_value):
@@ -119,7 +121,7 @@ completion = client.chat.completions.create(
     messages=[
         {
             "role": "user",
-            "content": f"Im giving you data like so [[avg temperature of day 1, avg temperature of day 2, avg temperature of day 3, avg temperature of day 4], [if it rains on day 1,if it rains on day 2, if it rains on day 3, if it rains on day 4], [if its cloudy on day 1, if its cloudy on day 2, if its cloudy on day 3, if its cloudy on day 4]]]. Here is the data{locationdata.get(location)[1]} Give me four outfits using these tops {tops} these bottoms{bottoms} and these footwear{footwear}, one for each day consisting of 3 articles: top, bottom and shoes and make sure the combinations are stylish. Return the result as a list of just the clothes and no identifiers. dont reuse clothes and only give the list, no reasoning, no commas, ONLY WHITESPACE AS SEPERATOR, extra bits, or python wrapper for formating"
+            "content": f"Im giving you data like so [[avg temperature of day 1, avg temperature of day 2, avg temperature of day 3, avg temperature of day 4], [if it rains on day 1,if it rains on day 2, if it rains on day 3, if it rains on day 4], [if its cloudy on day 1, if its cloudy on day 2, if its cloudy on day 3, if its cloudy on day 4]]]. Here is the data{locationdata.get(location)[1]} Give me four outfits using these tops {tops} and these bottoms{bottoms}, one for each day consisting of 2 articles: top, bottom and shoes and make sure the combinations are stylish. Each article of clothing is given as with the rbg color and the article name. First convert all the rgb color code to the closest colour name. Then create a outfit for each day and return only the colour, keep the colours to just one word, and article of clothing for each outfit for each day with no seperators, no resonaing and no extra bits and no labels just whitespace"
         }
     ],
     temperature=1,
@@ -135,13 +137,13 @@ days = [[],[],[],[]]
 for chunk in completion:
     result += (chunk.choices[0].delta.content or "")
 
-
 span = 2
 result = result.split()
 result = [" ".join(result[i:i+span]) for i in range(0, len(result), span)]
 
 for i in range(4):
-    for j in range(3):
-        days[i].append(result[j+(i*3)])
+    for j in range(2):
+        days[i].append(result[j+(i*2)])
 
 print(days)
+
