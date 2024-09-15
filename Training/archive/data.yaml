@@ -1,0 +1,5 @@
+train: C:\Users\aryae\Documents\Hackathons\Hack The North 2024\Github Repo\FitCheck\Training\archive\Images\traintrue
+val: C:\Users\aryae\Documents\Hackathons\Hack The North 2024\Github Repo\FitCheck\Training\archive\Images\val
+
+nc: 13  # Number of classes
+names: ['1', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13']

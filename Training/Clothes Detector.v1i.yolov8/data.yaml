@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 13
+names: ['long sleeve dress', 'long sleeve outwear', 'long sleeve top', 'short sleeve dress', 'short sleeve outwear', 'short sleeve top', 'shorts', 'skirt', 'sling dress', 'sling', 'trousers', 'vest dress', 'vest']
+
+roboflow:
+  workspace: 4-kyd24
+  project: clothes-detector
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/4-kyd24/clothes-detector/dataset/1
