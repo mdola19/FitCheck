@@ -107,7 +107,7 @@
         });
     </script>
 
-    <script> // Snapshots
+    <!-- <script> // Snapshots
         document.getElementById('scan-btn').addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -152,8 +152,66 @@
                 }
             });
         });
-    </script>
+    </script> -->
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchSnapshots();
+        });
+    
+        function fetchSnapshots() {
+            $.ajax({
+                type: 'GET',
+                url: '{{ url_for("get_snapshots") }}',
+                success: function(response) {
+                    const snapshotList = document.getElementById('snapshot-list');
+                    snapshotList.innerHTML = ''; // Clear existing list items
+    
+                    response.forEach(snapshot => {
+                        const snapshotURL = '{{ url_for("static", filename="snapshots/") }}' + snapshot.filename;
+                        
+                        const snapshotHTML = `
+                            <div class="card2">
+                                <img src="${snapshotURL}" alt="Snapshot" style="width: 85%; height: auto;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Snapshot</h5>
+                                    <p class="card-text">Captured on ${new Date(snapshot.timestamp).toLocaleString()}</p>
+                                </div>
+                            </div>
+                        `;
+    
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = snapshotHTML;
+                        snapshotList.appendChild(listItem);
+                    });
+                }
+            });
+        }
+    
+        document.getElementById('scan-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+    
+            const video = document.getElementById('videoFeed');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+    
+            canvas.width = video.width * 0.8;
+            canvas.height = video.height * 0.8;
+    
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+            const dataURL = canvas.toDataURL('image/png');
+    
+            $.ajax({
+                type: 'POST',
+                url: '{{ url_for("save_snapshot") }}',
+                data: { image: dataURL },
+                success: function(response) {
+                    fetchSnapshots(); // Refresh the snapshot list after saving a new snapshot
+                }
+            });
+        });
+    </script>
     
 
 </body>

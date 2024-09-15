@@ -6,9 +6,25 @@ from PIL import Image
 import os
 import time
 import json
+from flask_sqlalchemy import SQLAlchemy
+
+
 
 app = Flask(__name__)
 app.secret_key = 'd7b9df1c170072ea7ff4f719ac6d9a51'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///snapshots.db'  # Use SQLite for simplicity
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# Define the Snapshot model
+class Snapshot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(100), nullable=False)
+    image_data = db.Column(db.LargeBinary, nullable=False)
+    timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+
+
 
 # Hardcoded valid login credentials
 valid_username = 'jake123'
@@ -48,10 +64,22 @@ def save_snapshot():
     snapshot_filename = 'snapshot_{}.png'.format(int(time.time()))
     filepath = os.path.join('static', 'snapshots', snapshot_filename)
 
+    # Save image to database
+    new_snapshot = Snapshot(filename=snapshot_filename, image_data=image_data)
+    db.session.add(new_snapshot)
+    db.session.commit()
+
     with open(filepath, 'wb') as f:
         f.write(image_data)
 
     return jsonify({'filename': snapshot_filename})
+
+@app.route('/get_snapshots')
+def get_snapshots():
+    snapshots = Snapshot.query.all()
+    snapshot_list = [{'id': s.id, 'filename': s.filename, 'timestamp': s.timestamp} for s in snapshots]
+    return jsonify(snapshot_list)
+
 # Saving Snapshot
 
 @app.route('/')
@@ -103,7 +131,9 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+        # db.drop_all()
     app.run(debug=True)
-
 
 
