@@ -7,8 +7,8 @@ import os
 import time
 import json
 from flask_sqlalchemy import SQLAlchemy
-
-
+from bs4 import BeautifulSoup
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'd7b9df1c170072ea7ff4f719ac6d9a51'
@@ -16,19 +16,98 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///snapshots.db'  # Use SQLite f
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Define the Snapshot model
+# Define the Snapshot Database
 class Snapshot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(100), nullable=False)
     image_data = db.Column(db.LargeBinary, nullable=False)
     timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-
-
-
 # Hardcoded valid login credentials
 valid_username = 'jake123'
 valid_password = '123'
+
+
+
+# WEBSCRAPING ----------------------------------------------------------------------------------------------------
+def fetch_tops():
+    url = 'https://www.hollisterco.com/shop/wd/mens-tops'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    tops = []
+    
+    # Fetching titles, prices, and images
+    product_titles = soup.find_all('h2', {'data-aui': 'product-card-name'})
+    product_prices = soup.find_all('span', {'class': 'product-price-text'})
+    product_images = soup.find_all('img', {'data-aui': 'product-card-image'})
+    
+    # Check lengths
+    len_titles = len(product_titles)
+    len_prices = len(product_prices)
+    len_images = len(product_images)
+    print(f"Titles: {len_titles}, Prices: {len_prices}, Images: {len_images}")
+
+    # Combine the lists into a single list of dictionaries
+    for i in range(min(len_titles, len_prices, len_images)):
+        title = product_titles[i].get_text().strip()
+        price = product_prices[i].get_text().strip()
+        image = product_images[i]['src']
+        
+        tops.append({
+            'title': title,
+            'price': price,
+            'image': image
+        })
+
+    return tops
+
+def fetch_bottoms():
+    url = 'https://www.hollisterco.com/shop/ca/mens-bottoms'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    bottoms = []
+    
+    # Fetching titles, prices, and images
+    product_titles = soup.find_all('h2', {'data-aui': 'product-card-name'})
+    product_prices = soup.find_all('span', {'class': 'product-price-text'})
+    product_images = soup.find_all('img', {'data-aui': 'product-card-image'})
+    
+    # Check lengths
+    len_titles = len(product_titles)
+    len_prices = len(product_prices)
+    len_images = len(product_images)
+    print(f"Titles: {len_titles}, Prices: {len_prices}, Images: {len_images}")
+
+    # Combine the lists into a single list of dictionaries
+    for i in range(min(len_titles, len_prices, len_images)):
+        title = product_titles[i].get_text().strip()
+        price = product_prices[i].get_text().strip()
+        image = product_images[i]['src']
+        
+        bottoms.append({
+            'title': title,
+            'price': price,
+            'image': image
+        })
+
+    return bottoms
+
+
+@app.route('/expand')
+def tops():
+    products = fetch_tops()
+    return render_template('expand.html', products=products)
+
+@app.route('/expand')
+def bottoms():
+    products = fetch_bottoms()
+    return render_template('expand.html', products=products)
+
+# WEBSCRAPING ----------------------------------------------------------------------------------------------------
+
+
 
 # Video Feed Setup
 camera = cv2.VideoCapture(0)

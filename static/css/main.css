@@ -22,7 +22,6 @@
 .index-body {
   background-color: var(--bg-color);
   height: 100vh;
-  overflow: hidden;
 }
 
 @keyframes animStar {
@@ -520,6 +519,9 @@
 .camera-container .contain .right-box ul li .card2:hover {
   background-color: var(--primary);
 }
+.camera-container .contain .right-box ul li .card2:hover img {
+  border: 2px solid var(--bg-color);
+}
 .camera-container .contain .right-box ul li .card2:hover .card-body h5 {
   color: var(--bg-color);
 }
@@ -635,6 +637,7 @@
   position: relative;
   margin-left: 13.5em;
   margin-top: 4em;
+  overflow-y: hidden;
 }
 .expand-container h1 {
   color: var(--primary);
@@ -667,4 +670,26 @@
   background-color: var(--bg-color);
   color: var(--secondary);
   border: 2px solid var(--secondary);
+}
+.expand-container ul.product {
+  display: flex;
+  margin-top: 1em;
+  flex-direction: row;
+  width: 80vw;
+  gap: 1.5em;
+  overflow: auto;
+}
+.expand-container ul.product li img {
+  width: 350px;
+  border-radius: 20px;
+}
+.expand-container ul.product li h2 {
+  padding: 0.5em;
+  font-size: 15px;
+  color: var(--primary);
+}
+.expand-container ul.product li p {
+  color: var(--white);
+  font-size: 12px;
+  padding: 0 0 0 0.8em;
 }/*# sourceMappingURL=main.css.map */
