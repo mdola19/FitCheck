@@ -28,7 +28,7 @@
                 <div class="menu">
                     <p class="title">FitCheck</p>
                     <ul>
-                        <li class="active">
+                        <li class="">
                             <a href="{{ url_for('index') }}">
                                 <i class="icon ph-bold ph-house-simple"></i>
                                 <span class="text black">Home</span>
@@ -76,13 +76,12 @@
         <div class="btn-container">
             <a data-target="list1" href="" class="tops btn">Tops</a>
             <a data-target="list2" href="" class="bottoms btn">Bottoms</a>
-            <a data-target="list3" href="" class="sneakers btn">Sneakers</a>
         </div>
 
         <ul id="list1" class="product">
             {% for top in tops %}
                 <li>
-                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                    <a target="_blank" href="{{ top.link }}"><img src="{{ top.image }}" alt="{{ top.title }}"></a>
                     <div>
                         <h2>{{ top.title }}</h2>
                         <p>{{ top.price }}</p>
@@ -91,20 +90,16 @@
             {% endfor %}
         </ul>
 
-        <ul id="list2" class="product"></ul>
+        <ul id="list2" class="product">
             {% for bottom in bottoms %}
                 <li>
-                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                    <img src="{{ bottom.image }}" alt="{{ bottom.title }}">
                     <div>
                         <h2>{{ bottom.title }}</h2>
                         <p>{{ bottom.price }}</p>
                     </div>
                 </li>
             {% endfor %}
-        </ul>
-
-        <ul id="list3" class="product"></ul>
-            
         </ul>
     </div>
 

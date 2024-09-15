@@ -41,6 +41,7 @@ def fetch_tops():
     product_titles = soup.find_all('h2', {'data-aui': 'product-card-name'})
     product_prices = soup.find_all('span', {'class': 'product-price-text'})
     product_images = soup.find_all('img', {'data-aui': 'product-card-image'})
+    product_links = soup.find_all('a')
     
     # Check lengths
     len_titles = len(product_titles)
@@ -48,16 +49,27 @@ def fetch_tops():
     len_images = len(product_images)
     print(f"Titles: {len_titles}, Prices: {len_prices}, Images: {len_images}")
 
+    counter = 0
+
     # Combine the lists into a single list of dictionaries
     for i in range(min(len_titles, len_prices, len_images)):
+
+        if(i >11):
+            break
+
         title = product_titles[i].get_text().strip()
         price = product_prices[i].get_text().strip()
         image = product_images[i]['src']
+        index = 352 + counter
+        link = f"https://www.hollisterco.com{product_links[index]['href']}"
+
+        counter += 2
         
         tops.append({
             'title': title,
             'price': price,
-            'image': image
+            'image': image,
+            'link': link
         })
 
     return tops
@@ -82,6 +94,10 @@ def fetch_bottoms():
 
     # Combine the lists into a single list of dictionaries
     for i in range(min(len_titles, len_prices, len_images)):
+
+        if(i > 11):
+            break
+
         title = product_titles[i].get_text().strip()
         price = product_prices[i].get_text().strip()
         image = product_images[i]['src']
@@ -94,16 +110,13 @@ def fetch_bottoms():
 
     return bottoms
 
-
-@app.route('/expand')
-def tops():
-    products = fetch_tops()
-    return render_template('expand.html', products=products)
-
 @app.route('/expand')
 def bottoms():
-    products = fetch_bottoms()
-    return render_template('expand.html', products=products)
+    bottoms = fetch_bottoms()
+    tops = fetch_tops()
+    return render_template('expand.html', bottoms=bottoms, tops=tops)
+
+
 
 # WEBSCRAPING ----------------------------------------------------------------------------------------------------
 
