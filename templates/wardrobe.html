@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wardrobe</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -17,11 +17,11 @@
             </div>
             <div class="head">
                 <div class="pfp-img">
-                    <img src="images/pfp.jpg" alt="">
+                    <img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="">
                 </div>
 
                 <div class="details">
-                    <p class="name">Jake</p>
+                    <p class="name">{{ username }}</p>
                 </div>
             </div>
             <div class="nav">
@@ -29,25 +29,25 @@
                     <p class="title">FitCheck</p>
                     <ul>
                         <li class="active">
-                            <a href="index.html">
+                            <a href="{{ url_for('index') }}">
                                 <i class="icon ph-bold ph-house-simple"></i>
                                 <span class="text black">Home</span>
                             </a>
                         </li>
                         <li>
-                            <a href="wardrobe.html">
+                            <a href="{{ url_for('wardrobe') }}">
                                 <i class="icon ph-bold ph-dresser"></i>
                                 <span class="text black">Wardrobe</span>
                             </a>
                         </li>
                         <li>
-                            <a href="outfits.html">
+                            <a href="{{ url_for('outfits') }}">
                                 <i class="icon ph-bold ph-t-shirt"></i>
                                 <span class="text black">Outfits</span>
                             </a>
                         </li>
                         <li>
-                            <a href="expand.html">
+                            <a href="{{ url_for('expand') }}">
                                 <i class="icon ph-bold ph-plus-circle"></i>
                                 <span class="text black">Expand Wardrobe</span>
                             </a>
@@ -77,87 +77,16 @@
         <div class="contain">
             <div class="left-side">
                 <h2>Add Items</h2>
-                <h4><a href="">Instructions: </a> Place your book so it shows up on the screen, change the speed if needed and hit Start.</h4>
+                <h4><a href="#">Instructions: </a> Place your item in front of the camera and click scan.</h4>
                 <img src="{{ url_for('video_feed') }}" alt="Camera Feed" id="videoFeed">
+                <canvas id="canvas" style="display: none;"></canvas> <!-- Hidden canvas element -->
                 <div class="btn-container">
-                    <a onclick="" href="" class="start btn">Scan</a>
+                    <a id="scan-btn" href="#" class="start btn">Scan</a>
                 </div>
             </div>
     
             <div class="right-box">
-                <ul>
-                    <li>
-                        <div class="card2">
-                            <img src="">
-                            <div class="card-body">
-                                <h5 class="card-title">Item</h5>
-                                <p class="card-text">Color, Material, Type, Weather, other Tags</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card2">
-                            <img src="">
-                            <div class="card-body">
-                                <h5 class="card-title">Item</h5>
-                                <p class="card-text">Color, Material, Type, Weather, other Tags</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card2">
-                            <img src="">
-                            <div class="card-body">
-                                <h5 class="card-title">Item</h5>
-                                <p class="card-text">Color, Material, Type, Weather, other Tags</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card2">
-                            <img src="">
-                            <div class="card-body">
-                                <h5 class="card-title">Item</h5>
-                                <p class="card-text">Color, Material, Type, Weather, other Tags</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card2">
-                            <img src="">
-                            <div class="card-body">
-                                <h5 class="card-title">Item</h5>
-                                <p class="card-text">Color, Material, Type, Weather, other Tags</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card2">
-                            <img src="">
-                            <div class="card-body">
-                                <h5 class="card-title">Item</h5>
-                                <p class="card-text">Color, Material, Type, Weather, other Tags</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card2">
-                            <img src="">
-                            <div class="card-body">
-                                <h5 class="card-title">Item</h5>
-                                <p class="card-text">Color, Material, Type, Weather, other Tags</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card2">
-                            <img src="">
-                            <div class="card-body">
-                                <h5 class="card-title">Item</h5>
-                                <p class="card-text">Color, Material, Type, Weather, other Tags</p>
-                            </div>
-                        </div>
-                    </li>
+                <ul id="snapshot-list">
                 </ul> 
             </div>
         </div>
@@ -166,17 +95,66 @@
     <!-- JAVASCRIPT -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <script src="navbar.js"></script>
+    <script src="{{ url_for('static', filename='navbar.js') }}"></script>
 
-    <script> // Logout Button
+    <script>
+        // Logout Button
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('username');
-            window.location.href = 'login.html';
+            window.location.href = '{{ url_for("login") }}';
+        });
+    </script>
+
+    <script> // Snapshots
+        document.getElementById('scan-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const video = document.getElementById('videoFeed');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = video.width*0.8;
+            canvas.height = video.height*0.8;
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const dataURL = canvas.toDataURL('image/png');
+
+            // Send the snapshot to the server
+            $.ajax({
+                type: 'POST',
+                url: '{{ url_for("save_snapshot") }}',
+                data: { image: dataURL },
+                success: function(response) {
+                    const filename = response.filename;
+                    const snapshotURL = '{{ url_for("static", filename="snapshots/") }}' + filename;
+                    
+                    // Create HTML structure for the snapshot
+                    const snapshotHTML = `
+                        <div class="card2">
+                            <img src="${snapshotURL}" alt="Snapshot" style="width: 85%; height: auto;">
+                            <div class="card-body">
+                                <h5 class="card-title">Snapshot</h5>
+                                <p class="card-text">Captured on ${new Date().toLocaleString()}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    // Create a new list item and append the snapshot HTML to it
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = snapshotHTML;
+
+                    // Append the list item to the snapshot list
+                    const snapshotList = document.getElementById('snapshot-list');
+                    snapshotList.appendChild(listItem);
+                }
+            });
         });
     </script>
 
     
+
 </body>
 </html>

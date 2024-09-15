@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expand</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="static/css/main.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -17,7 +17,7 @@
             </div>
             <div class="head">
                 <div class="pfp-img">
-                    <img src="images/pfp.jpg" alt="">
+                    <img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="">
                 </div>
 
                 <div class="details">
@@ -29,25 +29,25 @@
                     <p class="title">FitCheck</p>
                     <ul>
                         <li class="active">
-                            <a href="index.html">
+                            <a href="{{ url_for('index') }}">
                                 <i class="icon ph-bold ph-house-simple"></i>
                                 <span class="text black">Home</span>
                             </a>
                         </li>
                         <li>
-                            <a href="wardrobe.html">
+                            <a href="{{ url_for('wardrobe') }}">
                                 <i class="icon ph-bold ph-dresser"></i>
                                 <span class="text black">Wardrobe</span>
                             </a>
                         </li>
                         <li>
-                            <a href="outfits.html">
+                            <a href="{{ url_for('outfits') }}">
                                 <i class="icon ph-bold ph-t-shirt"></i>
                                 <span class="text black">Outfits</span>
                             </a>
                         </li>
                         <li>
-                            <a href="expand.html">
+                            <a href="{{ url_for('expand') }}">
                                 <i class="icon ph-bold ph-plus-circle"></i>
                                 <span class="text black">Expand Wardrobe</span>
                             </a>
@@ -74,26 +74,23 @@
         <h1>Expand Your Wardrobe</h1>
 
         <div class="btn-container">
-            <a onclick="" href="" class="tops btn">Tops</a>
-            <a onclick="" href="" class="bottoms btn">Bottoms</a>
-            <a onclick="" href="" class="sneakers btn">Sneakers</a>
+            <a href="" class="tops btn">Tops</a>
+            <a href="" class="bottoms btn">Bottoms</a>
+            <a href="" class="sneakers btn">Sneakers</a>
         </div>
     </div>
 
     <!-- JAVASCRIPT -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <script src="navbar.js"></script>
+    <script src="{{ url_for('static', filename='navbar.js') }}"></script>
 
     <script> // Logout Button
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('username');
-            window.location.href = 'login.html';
+            window.location.href = '{{ url_for("login") }}';
         });
     </script>
 
-    
 </body>
 </html>

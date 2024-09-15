@@ -1090,7 +1090,7 @@
                             width: 100px;
                             height: 100px;
                             border: 2px solid var(--primary);
-                            border-radius: 10px;
+                            border-radius: 10px;                            
                         }
 
                         .card-body {
@@ -1110,6 +1110,10 @@
 
                         &:hover {
                             background-color: var(--primary);
+                            
+                            img {
+                                border: 2px solid var(--bg-color);
+                            }
 
                             .card-body {
 
