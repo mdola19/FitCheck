@@ -22,6 +22,7 @@
 .index-body {
   background-color: var(--bg-color);
   height: 100vh;
+  overflow: hidden;
 }
 
 @keyframes animStar {
