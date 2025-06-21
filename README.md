@@ -1,17 +1,12 @@
 # 🧥 FitCheck AI Stylist
 
-AI-powered, real-time outfit analysis and style advice web app.
+FitCheck is a web app that saves you time and keeps you stylish by organizing your wardrobe and generating personalized outfit suggestions. By combining your clothing inventory with real-time weather data and your style preferences, FitCheck helps you quickly choose the perfect look for any day—so you can spend less time deciding and more time showing up confidently.
 
 ---
 
 ## 📸 Screenshots
 
-Add your screenshots below:
-
-- **Image 1:** (e.g., app landing screen)  
-- **Image 2:** (e.g., voice interaction in progress)  
-- **Image 3:** (e.g., Pinterest recommendations panel)  
-- **Image 4:** (e.g., accessibility options UI)
+![Screenshot 2025-06-21 162955](https://github.com/user-attachments/assets/1a570364-4ae7-4016-bc0b-0d0e181d812f)
 
 ---
 
@@ -60,8 +55,6 @@ Add your screenshots below:
    {
      "openweather_api_key": "YOUR_OPENWEATHER_API_KEY",
      "groq_api_key": "YOUR_GROQ_API_KEY",
-     "deepgram_api_key": "YOUR_DEEPGRAM_API_KEY",
-     "google_api_key": "YOUR_GOOGLE_API_KEY"
    }
    ```
 
