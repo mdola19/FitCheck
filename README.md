@@ -6,7 +6,7 @@ FitCheck is a web app that saves you time and keeps you stylish by organizing yo
 
 ## 📸 Screenshots
 
-![Screenshot 2025-06-21 162955](https://github.com/user-attachments/assets/1a570364-4ae7-4016-bc0b-0d0e181d812f)
+![fitcheck](https://github.com/user-attachments/assets/67b76272-557b-4d48-a3f7-6c0948d25736)
 
 ---
 
